@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string.h>
 
+class Err_calc{};
+
 bool is_oper(char c) {
-    switch (c) {
+    switch (c){
         case '+':
         case '-':
         case '/':
@@ -12,6 +14,7 @@ bool is_oper(char c) {
             return false;
     }
 }
+
 int number(std::string &str) {
     int a = 0;
     int decade = 1;
@@ -27,7 +30,7 @@ int number(std::string &str) {
         } else if(is_oper(c)){
             break;
         } else {
-            throw "error";
+            throw Err_calc();
         }
     }
     return a;
@@ -47,7 +50,7 @@ int mul(std::string &str) {
             {
                 str.pop_back();
                 if (a == 0) {
-                    throw "error";
+                    throw Err_calc();
                 }
                 a = mul(str) / a;
                 break;
@@ -106,7 +109,7 @@ int main(int argc, char **argv) {
     }
     try {
         std::cout << add(str) << std::endl;
-    } catch (...) {
+    } catch (Err_calc &ex) {
         std::cerr << "error" << std::endl;
         return 1;
     }
