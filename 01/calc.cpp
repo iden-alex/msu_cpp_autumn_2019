@@ -2,7 +2,7 @@
 #include <string.h>
 
 bool is_oper(char c) {
-    switch (c){
+    switch (c) {
         case '+':
         case '-':
         case '/':
