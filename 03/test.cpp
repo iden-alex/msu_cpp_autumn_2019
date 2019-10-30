@@ -33,8 +33,11 @@ int main()
     //check_throw(m1[2][0], std::out_of_range);
 
     m1 *= 2;
-
-    const Matrix& m2 = m1;
+    
+    m1 = m1;
+    
+    const Matrix m11(m1);
+    const Matrix m2 = m11;
 
     check_equal(m2[0][0], 1 * 2);
     check_equal(m2[0][1], 2 * 2);
@@ -47,13 +50,17 @@ int main()
     check_throw(m3[0][0], std::out_of_range);
 
     const Matrix& m4 = m1;
-
+    
     Matrix m5(2, 3);
 
     check(m1 == m1);
     check(m1 != m3);
     check(m1 == m4);
     check(m1 != m5);
+    
+    
+    m5 = m1;
+    
     std::cout << "Test done\n";
 
     return 0;
