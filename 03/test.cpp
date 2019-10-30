@@ -29,8 +29,8 @@ int main()
     check_equal(m1.getRows(), 2);
     check_equal(m1.getColumns(), 3);
 
-    //check_throw(m1[0][3], std::out_of_range);
-    //check_throw(m1[2][0], std::out_of_range);
+    check_throw(m1[0][3], std::out_of_range);
+    check_throw(m1[2][0], std::out_of_range);
 
     m1 *= 2;
     
