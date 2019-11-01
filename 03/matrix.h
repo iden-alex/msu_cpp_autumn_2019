@@ -48,7 +48,7 @@ public:
             return *this;
         }
         if (ptr != nullptr) {
-            free(ptr);
+            delete [] ptr;
         }
         cols = B.getColumns();
         rows = B.getRows();
@@ -60,7 +60,7 @@ public:
         }
         return *this;
     }
-    int getElem(int i, int j) const {
+    int getElem(size_t i, size_t j) const {
         return ptr[i*cols + j];
     }
     size_t getRows() const {
@@ -105,6 +105,7 @@ public:
                 }
             }
         }
+        return true;
     }
     bool operator !=(const Matrix &B) const {
         return !(*this == B);
