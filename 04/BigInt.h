@@ -42,9 +42,6 @@ public:
     bool Is_positive() const {
         return sign;
     }
-    const char* GetNum() const {
-        return ptr;
-    }
     int GetLen() const {
         return len;
     }
