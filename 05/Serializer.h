@@ -100,7 +100,7 @@ private:
         try {
             value = std::stoull(text);
             return Error::NoError;
-        } catch (...) {
+        } catch (std::exception &x) {
             return Error::CorruptedArchive;
         }
     }
