@@ -13,7 +13,7 @@ std::string my_to_string(const T &a) {
 }
 
 template <class... ArgsType>
-std::string format(const std::string &begin_str, ArgsType ... args) {
+std::string format(const std::string &begin_str, ArgsType &&... args) {
     std::vector <std::string> samples = {my_to_string(std::forward<ArgsType> (args))...};
     std::string res;
     size_t i = 0;
