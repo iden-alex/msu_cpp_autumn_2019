@@ -7,11 +7,11 @@
 
 #include "vector.h"
 
-
 template <class T>
 int benchmark(T& c)
 {
-    const int N = 1000;
+    const int N = 10000;
+
     int res = 0;
 
     for (int j = 0; j < 20; ++j)
@@ -91,13 +91,13 @@ struct Counterable
     {
         ++Counter;
     }
-/*
+
     Counterable& operator=(const Counterable&)
     {
         ++Counter;
         return *this;
     }
-*/
+
     ~Counterable()
     {
         --Counter;
@@ -131,7 +131,7 @@ int main()
         checkEqual(v.size(), 0);
 
         v.push_back(1);
-        
+
         checkTrue(!v.empty());
         checkEqual(v.size(), 1);
         checkEqual(v[0], 1);
@@ -140,41 +140,30 @@ int main()
 
         checkTrue(v.empty());
         checkEqual(v.size(), 0);
-        
+
         v.push_back(3);
-        
         v.push_back(2);
-        
         v.push_back(1);
-        
+
         checkTrue(!v.empty());
         checkEqual(v.size(), 3);
         checkEqual(v[0], 3);
         checkEqual(v[1], 2);
         checkEqual(v[2], 1);
-        
+
         auto r = v.rbegin();
         checkTrue(r != v.rend());
-        
         checkEqual(*r, 1);
-        
         ++r;
-        
         checkTrue(r != v.rend());
-        
         checkEqual(*r, 2);
-        
         ++r;
-        
         checkTrue(r != v.rend());
-        
         checkEqual(*r, 3);
-        
         ++r;
-    
         checkTrue(r == v.rend());
+
         auto f = v.begin();
-    
         checkTrue(f != v.end());
         checkEqual(*f, 3);
         ++f;
@@ -185,7 +174,7 @@ int main()
         checkEqual(*f, 1);
         ++f;
         checkTrue(f == v.end());
-        
+
         v.reserve(10000);
         checkEqual(v.size(), 3);
         checkTrue(v.capacity() >= 10000);
@@ -214,14 +203,13 @@ int main()
         checkEqual(v[0], 0);
         checkEqual(v[1], 0);
     }
-    
+
     {
         Vector<Counterable> v;
         v.resize(100);
 
         checkEqual(Counter, 100);
 
-        
         for (int i = 0; i < 100; ++i)
         {
             v.push_back(Counterable());
@@ -247,8 +235,14 @@ int main()
         v.clear();
 
         checkEqual(Counter, 0);
-    } 
-    
+
+        v.resize(25);
+
+        checkEqual(Counter, 25);
+    }
+
+    checkEqual(Counter, 0);
+
     int res = 0;
 
     {
@@ -284,5 +278,5 @@ int main()
         res += benchmark(v);
     }
 
-    return 0;
-} 
+    return res;
+}
