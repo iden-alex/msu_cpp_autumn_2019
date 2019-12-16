@@ -18,6 +18,10 @@ size_t file_len(std::ifstream &f) {
 
 int main(const int argc, const char **argv) {
 	std::ifstream input(argv[1], std::ios::binary);
+	if (!input){
+        std::cerr << "Can't open " << argv[1] << '\n';
+        return 1;
+    }
 	size_t len = file_len(input);
 	uint64_t* arr = new uint64_t [CHUNK_SIZE];
 	size_t num_files = 2*(len/CHUNK_SIZE + (bool)(len % CHUNK_SIZE));
@@ -38,7 +42,15 @@ int main(const int argc, const char **argv) {
 			t1.join();
 			t2.join();
 			std::ofstream f1(f_names[i], std::ios::binary);
+			if (!f1) {
+        		std::cerr << "Can't open " << f_names[i] << '\n';
+        		return 1;
+    		}
 			std::ofstream f2(f_names[i+1], std::ios::binary);
+			if (!f2) {
+        		std::cerr << "Can't open " << f_names[i+1] << '\n';
+        		return 1;
+    		}
 			for (size_t m = 0; m < k/2;++m) {
 				f1.write((char *)(arr+m), UINT64_SIZE);
 			}
@@ -52,11 +64,23 @@ int main(const int argc, const char **argv) {
 	input.close();
 	for (size_t i = 0; i < num_files - 1; ++i) {
 		std::ifstream fr(f_names[i+1], std::ios::binary);
+		if (!fr) {
+        	std::cerr << "Can't open " << f_names[i+1] << '\n';
+        	return 1;
+    	}
 		size_t k = file_len(fr);
 		fr.read((char*)arr, k * UINT64_SIZE);
 		fr.close();
 		std::ifstream merg_f(f_names[i], std::ios::binary);
+		if (!merg_f) {
+        	std::cerr << "Can't open " << f_names[i] << '\n';
+        	return 1;
+    	}
 		std::ofstream res(f_names[i+1], std::ios::binary);
+		if (!res) {
+        	std::cerr << "Can't open " << f_names[i+1] << '\n';
+        	return 1;
+    	}
 		size_t pos = 0;
 		uint64_t a;
 		merg_f.read((char*)&a, UINT64_SIZE);
