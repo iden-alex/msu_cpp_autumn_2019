@@ -1,4 +1,4 @@
- #ifndef MY_VECTOR
+#ifndef MY_VECTOR
 #define MY_VECTOR
 
 template <class T>
@@ -171,7 +171,6 @@ public:
         return ptr[i];
     }
     
-    
     size_t size() const {
         return size_;
     }
@@ -201,4 +200,4 @@ public:
     }
 };
  
- #endif
+#endif
