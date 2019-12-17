@@ -17,8 +17,8 @@ public:
         return (pointer) malloc(sizeof(value_type) * count);
     }
 
-    void construct(pointer ptr, value_type val) {
-        new (ptr) T (val);
+    void construct(pointer ptr, const value_type &val) {
+    	*ptr = val;
     }
 
     void deallocate(pointer ptr, size_t count) {
@@ -53,23 +53,20 @@ public:
         return *this;
     }
 
-    Iterator& operator+(size_t n) {
+    Iterator& operator+(size_t n) const {
         if (rev_f) {
-            ptr_ -= n;
+            return Iterator(ptr_ - n);
         } else {
-            ptr_ += n;
+            return Iterator(ptr_ + n);
         }
-        return *this;
     }
 
-    Iterator& operator-(size_t n) { //rev_f показывает, явлвяется ли итератор обратным
-                                    //поэтому, тут все верно
-        if (rev_f) {
-            ptr_ += n;
+    Iterator& operator-(size_t n) const { 
+    	if (rev_f) {
+            return Iterator(ptr_ + n);
         } else {
-            ptr_ -= n;
+            return Iterator(ptr_ - n);
         }
-        return *this;
     }
 
     Iterator& operator--() {
