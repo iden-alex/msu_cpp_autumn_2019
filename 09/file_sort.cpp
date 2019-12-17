@@ -19,8 +19,8 @@ size_t file_len(std::ifstream &f) {
 std::vector <std::string> input_splitting(const char* file_name) {
 	std::ifstream input(file_name, std::ios::binary);
 	if (!input){
-        throw std::ios_base::failure(file_name);
-    }
+        	throw std::ios_base::failure(file_name);
+    	}
 	size_t len = file_len(input);
 	uint64_t* buf = new uint64_t [CHUNK_SIZE];
 	size_t num_files = 2 * (len / CHUNK_SIZE + (bool)(len % CHUNK_SIZE));
@@ -45,13 +45,13 @@ std::vector <std::string> input_splitting(const char* file_name) {
 			std::ofstream f1(f_names[i], std::ios::binary);
 			if (!f1) {
 				delete [] buf;
-        		throw std::ios_base::failure(f_names[i]);
-    		}
+        			throw std::ios_base::failure(f_names[i]);
+    			}
 			std::ofstream f2(f_names[i+1], std::ios::binary);
 			if (!f2) {
 				delete [] buf;
-        		throw std::ios_base::failure(f_names[i+1]);
-    		}
+        			throw std::ios_base::failure(f_names[i+1]);
+    			}
 			for (size_t m = 0; m < k/2;++m) {
 				f1.write((char *)(buf + m), UINT64_SIZE);
 			}
@@ -74,7 +74,7 @@ void file_merge(std::vector <std::string> &f_names) {
 		std::ifstream fr(f_names[i+1], std::ios::binary);
 		if (!fr) {
 			delete [] buf;
-	       	throw std::ios_base::failure(f_names[i+1]);
+	       		throw std::ios_base::failure(f_names[i+1]);
 	   	}
 		size_t k = file_len(fr);
 		fr.read((char*)buf, k * UINT64_SIZE);
@@ -83,13 +83,13 @@ void file_merge(std::vector <std::string> &f_names) {
 		std::ifstream merg_f(f_names[i], std::ios::binary);
 		if (!merg_f) {
 			delete [] buf;
-	       	throw std::ios_base::failure(f_names[i]);
-	    }
+	       		throw std::ios_base::failure(f_names[i]);
+	    	}
 		std::ofstream res(f_names[i+1], std::ios::binary);
 		if (!res) {
 			delete [] buf;
-	        throw std::ios_base::failure(f_names[i+1]);
-	    }
+	        	throw std::ios_base::failure(f_names[i+1]);
+	    	}
 
 		size_t pos = 0;
 		uint64_t tmp;
