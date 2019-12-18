@@ -20,7 +20,12 @@ public:
     void construct(pointer ptr, value_type &&val) {
         new (ptr) value_type(val);
     }
-
+    
+    
+    void construct(pointer ptr, const value_type &&val) {
+        new (ptr) value_type(val);
+    }
+    
     void deallocate(pointer ptr, size_t count) {
         free(ptr); 
     }
