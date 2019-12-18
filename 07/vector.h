@@ -20,7 +20,12 @@ public:
     void construct(pointer ptr, const value_type &val) {
     	*ptr = val;
     }
-
+    
+    
+    void construct(pointer ptr, const value_type &&val) {
+        new (ptr) value_type(val);
+    }
+    
     void deallocate(pointer ptr, size_t count) {
         free(ptr); 
     }
@@ -53,7 +58,7 @@ public:
         return *this;
     }
 
-    Iterator& operator+(size_t n) const {
+    Iterator operator+(size_t n) const {
         if (rev_f) {
             return Iterator(ptr_ - n);
         } else {
@@ -61,7 +66,7 @@ public:
         }
     }
 
-    Iterator& operator-(size_t n) const { 
+    Iterator operator-(size_t n) const { 
     	if (rev_f) {
             return Iterator(ptr_ + n);
         } else {
