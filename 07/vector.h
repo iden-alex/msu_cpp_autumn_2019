@@ -17,11 +17,7 @@ public:
         return (pointer) malloc(sizeof(value_type) * count);
     }
 
-    void construct(pointer ptr, const value_type &val) {
-    	*ptr = val;
-    }
-
-    void construct(pointer ptr, const value_type &&val) {
+    void construct(pointer ptr, value_type &&val) {
         new (ptr) value_type(val);
     }
 
@@ -132,7 +128,7 @@ public:
         if (new_cap > capacity_) {
             T* new_ptr = alloc_.allocate(new_cap);
             for (size_t i = 0; i < size_; ++i) {
-                alloc_.construct(new_ptr + i, ptr[i]);
+                alloc_.construct(new_ptr + i, std::move(ptr[i]));
             }
             alloc_.destruct(ptr, size_);
             alloc_.deallocate(ptr, capacity_);
