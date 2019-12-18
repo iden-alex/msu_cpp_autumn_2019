@@ -21,6 +21,10 @@ public:
     	*ptr = val;
     }
 
+    void construct(pointer ptr, const value_type &&val) {
+        new (ptr) value_type(val);
+    }
+
     void deallocate(pointer ptr, size_t count) {
         free(ptr); 
     }
@@ -32,7 +36,7 @@ public:
     }
 
     size_t max_size() const noexcept {
-        std::numeric_limits<size_t>::max();
+        return std::numeric_limits<size_t>::max();
     }
 };
 
@@ -53,7 +57,7 @@ public:
         return *this;
     }
 
-    Iterator& operator+(size_t n) const {
+    Iterator operator+(size_t n) const {
         if (rev_f) {
             return Iterator(ptr_ - n);
         } else {
@@ -61,7 +65,7 @@ public:
         }
     }
 
-    Iterator& operator-(size_t n) const { 
+    Iterator operator-(size_t n) const { 
     	if (rev_f) {
             return Iterator(ptr_ + n);
         } else {
