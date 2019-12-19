@@ -142,11 +142,11 @@ public:
         size_ = 0;
     }
     
-    void push_back(const T& val) {
+    void push_back(T&& val) {
         if (capacity_ == size_) {
             reserve(size_ + 1);
         }
-        ptr[size_] = val;
+        alloc_.construct(ptr + size_, std::move(val));
         size_++;
     }
     
