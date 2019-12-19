@@ -150,6 +150,14 @@ public:
         size_++;
     }
     
+    void push_back(const T& val) {
+        if (capacity_ == size_) {
+            reserve(size_ + 1);
+        }
+        alloc_.construct(ptr + size_, std::move(val));
+        size_++;
+    }
+
     void pop_back() {
         if (size_ > 0) {
             size_--;
